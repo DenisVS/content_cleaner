@@ -89,44 +89,15 @@ for ($i = 0; $i < count($sourceFiles); $i++) {
       $contentInArray = $LineByLine->stripping($inFileContent); //преобразуем содержимое файла в массив
       //echo "Содержимое файла по строкам в массиве:\n"; var_dump($contentInArray); echo "\n";
 //===================== НАЧИНАЕМ РАЗБИРАТЬ КОНТЕНТ =================
-      unset($asterisksStrings);
-      unset($headerPresent);
-      $header = FALSE;
-
-      //== РАЗБОР МАССИВА С КОНТЕНТОМ ПОСТРОЧНО. АНАЛИЗИРУЕМ.
-      foreach ($contentInArray as $key => $val) {
-        $asterisksStrings[] = lenghtEntryAsterisks($val); //загоняем в массив количество звёзд в начале строки
-        $sss = manStyle($val);
-        if ($sss == TRUE && $key < 2) {
-          $header = $val;
-        }
-      }
-      $analysysOfAstarisks = minMaxValues($asterisksStrings);
-      //==/КОНЕЦ БЛОКА
-
-      //      //
-      ////============      // разберёмся с соотношениями количеств звёзд
-      //if ($schitatZvezdy == TRUE) {
-      //а теперь подсчитываем количество максимальных значений звёздочек
-      //$coutMaxAsterisk = coutMaxValues($asterisksStrings);
-      if ($header == FALSE) {
-        echo 'Количество максимумов ' . $analysysOfAstarisks['max']['amount'] . "\n";
-
-        if (max($asterisksStrings) > 0 && $analysysOfAstarisks['max']['amount'] == 1 && $analysysOfAstarisks['indexes'][0] < 2) {
-          //var_dump($countsOfArray);
-          //echo "Звёздочки в максимальном количестве не заголовок, их " . $coutMaxAsterisk . "!\n";
-          $header = $contentInArray[$analysysOfAstarisks['indexes'][0]] . "\n";
-          echo 'Строка заголовка ' . $analysysOfAstarisks['indexes'][0] . "\n";
-          $headerPresent = FALSE; // Много звездатых, заголовком не пахнет.
-        }
-      }
 
 
 
 
-      if (isset($header)) {
-        echo 'Заголовок: "' . $header . '" в строке ' . "\n";
-      }
+
+
+
+
+
 //====================== НИЖЕ СОБИРАЕМ ФАЙЛ И ПИШЕМ ================
       $outFileContent = $LineByLine->assembling($contentInArray);  //возвращаем из массива в неформатированный текст
       //echo "Содержимое файла целиком:\n".$contentInFile."\n";

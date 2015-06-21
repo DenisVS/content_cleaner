@@ -119,7 +119,7 @@ function truncateText($text, $startEntry, $endEntry, $includeStart = FALSE, $inc
  * @return string Текст на выходе
  * 
  */
-function removeExcess($text, $startEntry, $endEntry) {
+function removeExcess($text, $startEntry, $endEntry, $required = FALSE) {
   $lenghtStartEntry = mb_strlen($startEntry);
   $lenghtEndEntry = mb_strlen($endEntry);
   if ($startEntry == NULL) {
@@ -143,9 +143,20 @@ function removeExcess($text, $startEntry, $endEntry) {
     $positionEnd = mb_strpos($contentTail, $endEntry);
   }
   $contentTail = mb_substr($contentTail, $positionEnd + $lenghtEndEntry);
+ 
+  echo "AA".$positionStart ." - ". $positionEnd."\n";
 
 
-  $result = $contentHead . $contentTail;
+  if ($required == TRUE && $positionStart !== FALSE && $positionEnd !== FALSE ) {
+    $result = $contentHead . $contentTail;
+  }
+  elseif ($required == FALSE) {
+    $result = $contentHead . $contentTail;
+  }
+  else {
+    $result = $text;
+  }
+
   return $result;
 }
 
@@ -211,3 +222,14 @@ function manStyle($param) {
     return FALSE;  
   }
 }
+ function mb_str_replace($needle, $replacement, $haystack) {
+    $needle_len = mb_strlen($needle);
+    $replacement_len = mb_strlen($replacement);
+    $pos = mb_strpos($haystack, $needle);
+    while ($pos !== false) {
+      $haystack = mb_substr($haystack, 0, $pos) . $replacement
+          . mb_substr($haystack, $pos + $needle_len);
+      $pos = mb_strpos($haystack, $needle, $pos + $replacement_len);
+    }
+    return $haystack;
+  }
